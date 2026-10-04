@@ -1,0 +1,14 @@
+{
+  "db_list" : "Lista baz danych",
+  "generate_key" : "Generator kluczy",
+  "generate_pass" : "Generator haseł",
+  "settings" : "Ustawienia",
+  "exit" : "Wyjście",
+  "wrong_choice" : "Wybrano nieprawidłową opcję. Spróbuj ponownie.",
+  "curr_lang" : "Aktualny język",
+  "change_lang" : "Zmień język",
+  "return" : "Wróć",
+  "not_num" : "Wartość musi być liczbą.",
+  "range" : "Wartość wychodzi poza zakres możliwości.",
+  "lang_choices" : "Języki do wybrania"
+}

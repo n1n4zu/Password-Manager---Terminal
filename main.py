@@ -1,0 +1,45 @@
+import json as js
+import cryptography as cg
+import keyring as kr
+import pyperclip as pcp
+import argon2
+import os
+from time import sleep
+from python_files.func import *
+from python_files.settings import settings
+
+setting = js.load(open('json_files/settings.json'))
+
+if __name__ == '__main__':
+    while True:
+        lang = setting.get('app_lang')
+        template = js.load(open(f'json_files/template_{(lang.lower())}.json'))
+
+        print(f'''Menu:
+1. {template['db_list']}
+2. {template['generate_key']}
+3. {template['generate_pass']}
+4. {template['settings']}
+5. {template['exit']}''')
+
+        choice = input('> ')
+        match choice:
+            case '1':
+                pass
+            case '2':
+                pass
+            case '3':
+                pass
+            case '4':
+                clear()
+                settings()
+                setting = js.load(open('json_files/settings.json'))
+                clear()
+            case '5':
+                js.dump(setting, fp=open('json_files/settings.json', 'w'))
+                exit()
+            case _:
+                print(template['wrong_choice'])
+                sleep(5)
+                clear()
+                continue

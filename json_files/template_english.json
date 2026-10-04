@@ -1,0 +1,14 @@
+{
+  "db_list" : "Databases list",
+  "generate_key" : "Key generator",
+  "generate_pass" : "Password generator",
+  "settings" : "Settings",
+  "exit" : "Exit",
+  "wrong_choice" : "Bad option. Please try again.",
+  "curr_lang" : "Current language",
+  "change_lang" : "Change language",
+  "return" : "Return",
+  "not_num" : "Value has to be a number.",
+  "range" : "Value goes beyond the realm of possibility.",
+  "lang_choices" : "Languages to choose"
+}
