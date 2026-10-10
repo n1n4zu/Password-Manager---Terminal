@@ -10,5 +10,10 @@
   "return" : "Wróć",
   "not_num" : "Wartość musi być liczbą.",
   "range" : "Wartość wychodzi poza zakres możliwości.",
-  "lang_choices" : "Języki do wybrania"
+  "lang_choices" : "Języki do wybrania",
+  "gen_pass" : "Wygeneruj hasło",
+  "pass_len" : "Podaj długość hasła",
+  "wrong_pass_len" : "Hasło nie może mieć długości mniejszej niż 8 znaków.",
+  "pass" : "Twoje hasło",
+  "copy" : "Hasło zostało skopiowane do schowka."
 }

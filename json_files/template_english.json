@@ -10,5 +10,10 @@
   "return" : "Return",
   "not_num" : "Value has to be a number.",
   "range" : "Value goes beyond the realm of possibility.",
-  "lang_choices" : "Languages to choose"
+  "lang_choices" : "Languages to choose",
+  "gen_pass" : "Generate password",
+  "pass_len" : "Input password length",
+  "wrong_pass_len" : "Password has to have at least 8 chars length.",
+  "pass" : "Your password",
+  "copy" : "Password was copied to clipboard."
 }
