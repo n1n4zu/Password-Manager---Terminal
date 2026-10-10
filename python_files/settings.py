@@ -34,7 +34,7 @@ def change(template: JSONDecoder) -> None:
             clear()
 
 
-def settings():
+def settings() -> None:
     while True:
         lang = setting.get('app_lang')
         template = js.load(open(f'json_files/template_{(lang.lower())}.json'))
