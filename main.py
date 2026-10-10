@@ -7,10 +7,12 @@ import os
 from time import sleep
 from python_files.func import *
 from python_files.settings import settings
+from python_files.gen_pass import password
 
 setting = js.load(open('json_files/settings.json'))
 
 if __name__ == '__main__':
+    clear()
     while True:
         lang = setting.get('app_lang')
         template = js.load(open(f'json_files/template_{(lang.lower())}.json'))
@@ -29,7 +31,9 @@ if __name__ == '__main__':
             case '2':
                 pass
             case '3':
-                pass
+                clear()
+                password()
+                clear()
             case '4':
                 clear()
                 settings()
