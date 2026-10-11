@@ -15,5 +15,13 @@
   "pass_len" : "Podaj długość hasła",
   "wrong_pass_len" : "Hasło nie może mieć długości mniejszej niż 8 znaków.",
   "pass" : "Twoje hasło",
-  "copy" : "Hasło zostało skopiowane do schowka."
+  "copy" : "Hasło zostało skopiowane do schowka.",
+  "ed25519" : "Wygeneruj klucz SSH Ed25519",
+  "rsa" : "Wygeneruj klucz SSH RSA",
+  "key_pass" : "Podaj hasło do klucza",
+  "key_name" : "Podaj nazwę klucza",
+  "generated" : "Klucz został zapisany w ścieżce",
+  "empty_pass" : "Hasło do klucza nie może być puste.",
+  "key_size" : "Podaj rozmiar klucza",
+  "weak_key" : "Rozmiar kluczy musi być równy przynajmniej 3072."
 }

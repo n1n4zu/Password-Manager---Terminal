@@ -8,6 +8,7 @@ from time import sleep
 from python_files.func import *
 from python_files.settings import settings
 from python_files.gen_pass import password
+from python_files.gen_key import ssh_keys
 
 setting = js.load(open('json_files/settings.json'))
 
@@ -29,7 +30,9 @@ if __name__ == '__main__':
             case '1':
                 pass
             case '2':
-                pass
+                clear()
+                ssh_keys()
+                clear()
             case '3':
                 clear()
                 password()
