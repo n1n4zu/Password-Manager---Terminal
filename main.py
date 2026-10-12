@@ -1,9 +1,4 @@
 import json as js
-import cryptography as cg
-import keyring as kr
-import pyperclip as pcp
-import argon2
-import os
 from time import sleep
 from python_files.func import *
 from python_files.settings import settings
