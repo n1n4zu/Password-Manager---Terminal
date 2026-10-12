@@ -9,6 +9,8 @@ from python_files.func import *
 from python_files.settings import settings
 from python_files.gen_pass import password
 from python_files.gen_key import ssh_keys
+from python_files.database import database
+
 
 setting = js.load(open('json_files/settings.json'))
 
@@ -28,7 +30,9 @@ if __name__ == '__main__':
         choice = input('> ')
         match choice:
             case '1':
-                pass
+                clear()
+                database()
+                clear()
             case '2':
                 clear()
                 ssh_keys()

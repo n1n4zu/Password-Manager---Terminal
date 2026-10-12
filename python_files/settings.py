@@ -25,7 +25,7 @@ def change(template: JSONDecoder) -> None:
             clear()
             continue
 
-        if 1 <= choice <= i:
+        if 1 <= choice < i:
             setting['app_lang'] = setting['languages'][choice - 1]
             return
         else:

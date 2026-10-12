@@ -6,3 +6,7 @@ def clear() -> int:
     if platform == 'win32':
         return system('cls')
     return system('clear')
+
+
+class NoKeyError(Exception):
+    pass
