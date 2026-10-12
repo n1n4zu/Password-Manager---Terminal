@@ -38,6 +38,29 @@ def change(template: JSONDecoder) -> None:
             clear()
 
 
+def clipboard(template: JSONDecoder) -> None:
+    """
+    Change clipboard usage
+    :param template: Json file with values written in terminal
+    """
+    while True:
+        if setting['use_clipboard']:
+            print(f'{template['clipboard_status']}: {template['clipboard_status_y']}')
+        else:
+            print(f'{template['clipboard_status']}: {template['clipboard_status_n']}')
+
+        choice = input(f'{template['use_clipboard']}\n> ')
+
+        if choice.lower() == 'n':
+            setting['use_clipboard'] = False
+        else:
+            setting['use_clipboard'] = True
+
+        js.dump(setting, fp=open('json_files/settings.json', 'w'))
+
+        return
+
+
 def settings() -> None:
     """
     Main function to manage settings
@@ -48,7 +71,8 @@ def settings() -> None:
 
         print(f'''{template['curr_lang']}: {setting['app_lang']}
 1. {template['change_lang']}
-2. {template['return']}''')
+2. {template['clipboard']}
+3. {template['return']}''')
         choice = input('> ')
 
         match choice:
@@ -57,6 +81,10 @@ def settings() -> None:
                 change(template)
                 clear()
             case '2':
+                clear()
+                clipboard(template)
+                clear()
+            case '3':
                 js.dump(setting, fp=open('json_files/settings.json', 'w'))
                 return
             case _:

@@ -5,9 +5,8 @@ from python_files.settings import settings
 from python_files.gen_pass import password
 from python_files.gen_key import ssh_keys
 from python_files.database import database
+from python_files.settings import setting
 
-
-setting = js.load(open('json_files/settings.json'))
 
 if __name__ == '__main__':
     """

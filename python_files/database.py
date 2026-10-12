@@ -10,9 +10,9 @@ from argon2.low_level import hash_secret_raw, Type
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from python_files.gen_pass import gen_pass
 from pathlib import Path
+from python_files.settings import setting
 
 
-setting = js.load(open('json_files/settings.json'))
 user = getuser()
 win_path = f'C:\\Users\\{user}\\.ssh\\'
 linux_path = f'/home/{user}/.ssh/'

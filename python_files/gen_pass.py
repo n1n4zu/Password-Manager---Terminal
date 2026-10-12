@@ -4,9 +4,7 @@ import pyperclip as pcp
 import json as js
 from time import sleep
 from python_files.func import *
-
-
-setting = js.load(open('json_files/settings.json'))
+from python_files.settings import setting
 
 
 def gen_pass(x: int = 20) -> str:
@@ -48,8 +46,11 @@ def password() -> None:
                 if x >= 8:
                     pas = gen_pass(x)
                     print(f'{template['pass']}: {pas}')
-                    pcp.copy(pas)
-                    print(f'{template['copy']}')
+
+                    if setting['use_clipboard']:
+                        pcp.copy(pas)
+                        print(f'{template['copy']}')
+
                     sleep(5)
                     return
                 else:

@@ -57,5 +57,10 @@
   "no_key" : "The key file does not exist.",
   "no_key_encryption" : "The database was not encrypted with a key.",
   "db_exists" : "A database with that name already exists.",
-  "key_exists" : "A key with the specified name already exists."
+  "key_exists" : "A key with the given name already exists.",
+  "clipboard" : "Clipboard usage",
+  "use_clipboard" : "Use clipboard? [Y/n]",
+  "clipboard_status_y" : "In use",
+  "clipboard_status_n" : "Not in use",
+  "clipboard_status" : "Clipboard status"
 }
