@@ -5,7 +5,7 @@ import cryptography
 from python_files.func import *
 import os
 from sys import platform
-from getpass import getuser
+from getpass import getuser, getpass
 from argon2.low_level import hash_secret_raw, Type
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from python_files.gen_pass import gen_pass
@@ -20,6 +20,13 @@ db_path = 'databases/'
 
 
 def derive_key(password: str, salt: bytes, keyfile_data: bytes = b'') -> bytes:
+    """
+    Change password and optional keyfile data into 32-byte key
+    :param password: Password given by user or generated automatically
+    :param salt: Random bytes
+    :param keyfile_data: Data from keyfile
+    :return: Encrypted key
+    """
     combined_secret = password.encode() + keyfile_data
     key = hash_secret_raw(
         secret=combined_secret,
@@ -34,11 +41,23 @@ def derive_key(password: str, salt: bytes, keyfile_data: bytes = b'') -> bytes:
 
 
 def load_keyfile(path: str) -> bytes:
+    """
+    Load bytes from keyfile in given path
+    :param path: Path to the keyfile
+    :return: Bytes in the keyfile
+    """
     with open(path, 'rb') as f:
         return f.read()
 
 
 def encrypt_database(data: dict, password: str, keyfile_data: bytes = b'') -> bytes:
+    """
+    Change Python dictionary into encrypted data
+    :param data: Python dictionary
+    :param password: Password given by user or generated automatically
+    :param keyfile_data: Data from keyfile
+    :return: Encrypted data
+    """
     salt = os.urandom(16)
     nonce = os.urandom(12)
     key = derive_key(password, salt, keyfile_data)
@@ -51,6 +70,13 @@ def encrypt_database(data: dict, password: str, keyfile_data: bytes = b'') -> by
 
 
 def decrypt_database(blob: bytes, password: str, keyfile_data: bytes = b'') -> dict:
+    """
+    Change encrypted data into Python dictionary
+    :param blob: Encrypted data
+    :param password: Password needed to unlock data
+    :param keyfile_data: Data from keyfile
+    :return: Python dictionary
+    """
     salt, nonce, ciphertext = blob[:16], blob[16:28], blob[28:]
     key = derive_key(password, salt, keyfile_data)
 
@@ -63,6 +89,13 @@ def decrypt_database(blob: bytes, password: str, keyfile_data: bytes = b'') -> d
 
 
 def save_database(data: dict, path: str, password: str, keyfile_path: str | None = None) -> None:
+    """
+    Save encrypted data to database
+    :param data: Encrypted data
+    :param path: Path to directory with databases
+    :param password: Password given by user or generated automatically
+    :param keyfile_path: Path to the keyfile
+    """
     keyfile_data = load_keyfile(keyfile_path) if keyfile_path else b''
     blob = encrypt_database(data, password, keyfile_data)
     with open(path, 'wb') as f:
@@ -70,6 +103,13 @@ def save_database(data: dict, path: str, password: str, keyfile_path: str | None
 
 
 def open_database(path: str, password: str, keyfile_path: str | None = None) -> dict:
+    """
+    Open encrypted database
+    :param path: Path to the database
+    :param password: Password needed to unlock the database
+    :param keyfile_path: Path to the keyfile
+    :return: Python dictionary
+    """
     keyfile_data = load_keyfile(keyfile_path) if keyfile_path else b''
     with open(path, 'rb') as f:
         blob = f.read()
@@ -77,6 +117,11 @@ def open_database(path: str, password: str, keyfile_path: str | None = None) -> 
 
 
 def find_db(db_name: str) -> bool:
+    """
+    Look for database in the directory
+    :param db_name: Database name
+    :return: Bool value
+    """
     for dirpath, dirnames, filenames in os.walk(db_path):
         if db_name in filenames:
             return True
@@ -84,6 +129,11 @@ def find_db(db_name: str) -> bool:
 
 
 def find_key(keyfile: str) -> bool:
+    """
+    Look for the keyfile in the directory
+    :param keyfile: Keyfile name or path to the keyfile
+    :return: Bool value
+    """
     if '/' not in keyfile and '\\' not in keyfile:
         if platform == 'win32':
             path = win_path
@@ -104,6 +154,14 @@ def find_key(keyfile: str) -> bool:
 
 
 def manage_db(db: dict, template: JSONDecoder, db_name: str, db_password: str, keyfile_path: str | None = None) -> None:
+    """
+    Manage database content
+    :param db: Python dictionary
+    :param template: Json file with values written in terminal
+    :param db_name: Name of database needed to save changes
+    :param db_password: Password to the database to save changes
+    :param keyfile_path: Path to the keyfile to save changes
+    """
     while True:
         clear()
         print(f'''1. {template['list_content']}
@@ -173,7 +231,7 @@ def manage_db(db: dict, template: JSONDecoder, db_name: str, db_password: str, k
                             print(template['wrong_pass_len'])
                     case '2':
                         while password == '':
-                            password = input(f'{template['rec_pass']}\n> ')
+                            password = getpass(f'{template['rec_pass']}\n> ')
 
                             db[record_name]['password'] = password
 
@@ -290,7 +348,7 @@ def manage_db(db: dict, template: JSONDecoder, db_name: str, db_password: str, k
                                         print(template['wrong_pass_len'])
                                 case '2':
                                     while password == '':
-                                        password = input(f'{template['rec_pass']}\n> ')
+                                        password = getpass(f'{template['rec_pass']}\n> ')
                                         if password == '':
                                             print(template['empty_pass'])
                                             continue
@@ -332,6 +390,9 @@ def manage_db(db: dict, template: JSONDecoder, db_name: str, db_password: str, k
 
 
 def database() -> None:
+    """
+    Main function to manage databases with passwords
+    """
     while True:
         clear()
         lang = setting.get('app_lang')
@@ -373,7 +434,7 @@ def database() -> None:
                             keyfile_path = linux_path + keyfile_path
 
                 while password == '':
-                    password = input(f'{template['db_pass']}\n> ')
+                    password = getpass(f'{template['db_pass']}\n> ')
                     if password == '':
                         print(f'{template['empty_pass']}')
                         continue
@@ -436,7 +497,7 @@ def database() -> None:
                             keyfile_path = linux_path + keyfile_path
 
                 while password == '':
-                    password = input(f'{template['db_pass']}\n> ')
+                    password = getpass(f'{template['db_pass']}\n> ')
                     if password == '':
                         print(f'{template['empty_pass']}')
                         continue
@@ -494,7 +555,7 @@ def database() -> None:
                             keyfile_path = linux_path + keyfile_path
 
                 while password == '':
-                    password = input(f'{template['db_pass']}\n> ')
+                    password = getpass(f'{template['db_pass']}\n> ')
                     if password == '':
                         print(f'{template['empty_pass']}')
                         continue

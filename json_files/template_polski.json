@@ -56,5 +56,6 @@
   "no_rec" : "Rekord nie istnieje.",
   "no_key" : "Plik klucza nie istnieje.",
   "no_key_encryption" : "Baza danych nie była szyfrowana kluczem.",
-  "db_exists" : "Baza danych o takiej nazwie już istnieje."
+  "db_exists" : "Baza danych o takiej nazwie już istnieje.",
+  "key_exists" : "Klucz o podanej nazwie już istnieje."
 }

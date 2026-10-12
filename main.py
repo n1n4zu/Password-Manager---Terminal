@@ -15,6 +15,9 @@ from python_files.database import database
 setting = js.load(open('json_files/settings.json'))
 
 if __name__ == '__main__':
+    """
+    Main loop of the program
+    """
     clear()
     while True:
         lang = setting.get('app_lang')

@@ -8,6 +8,10 @@ setting = js.load(open('json_files/settings.json'))
 
 
 def change(template: JSONDecoder) -> None:
+    """
+    Change language
+    :param template: Json file with values written in terminal
+    """
     while True:
         print(f'{template['lang_choices']}:')
 
@@ -35,6 +39,9 @@ def change(template: JSONDecoder) -> None:
 
 
 def settings() -> None:
+    """
+    Main function to manage settings
+    """
     while True:
         lang = setting.get('app_lang')
         template = js.load(open(f'json_files/template_{(lang.lower())}.json'))

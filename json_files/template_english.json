@@ -56,5 +56,6 @@
   "no_rec" : "The record does not exist.",
   "no_key" : "The key file does not exist.",
   "no_key_encryption" : "The database was not encrypted with a key.",
-  "db_exists" : "A database with that name already exists."
+  "db_exists" : "A database with that name already exists.",
+  "key_exists" : "A key with the specified name already exists."
 }

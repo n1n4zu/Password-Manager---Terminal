@@ -4,7 +4,8 @@ import json as js
 from time import sleep
 from python_files.func import *
 from sys import platform
-from getpass import getuser
+from getpass import getuser, getpass
+from python_files.database import find_key
 
 setting = js.load(open('json_files/settings.json'))
 user = getuser()
@@ -13,6 +14,12 @@ linux_path = f'/home/{user}/.ssh/'
 
 
 def private_bytes(password: str, private_key: ed25519.Ed25519PrivateKey | rsa.RSAPrivateKey) -> bytes:
+    """
+    Generate bytes to private keys
+    :param password: Password to generate private keys
+    :param private_key: Private key
+    :return: Bytes in private key
+    """
     pb = private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PrivateFormat.OpenSSH,
@@ -25,6 +32,11 @@ def private_bytes(password: str, private_key: ed25519.Ed25519PrivateKey | rsa.RS
 
 
 def public_bytes(public_key: ed25519.Ed25519PublicKey | rsa.RSAPublicKey) -> bytes:
+    """
+    Generate bytes in public key
+    :param public_key: Public key
+    :return: Bytes in public key
+    """
     pb = public_key.public_bytes(
         encoding=serialization.Encoding.OpenSSH,
         format=serialization.PublicFormat.OpenSSH
@@ -34,6 +46,11 @@ def public_bytes(public_key: ed25519.Ed25519PublicKey | rsa.RSAPublicKey) -> byt
 
 
 def gen_ed25519_key(password: str, key_name: str = 'id_ed25519') -> None:
+    """
+    Generate Ed25519 key
+    :param password: Password to secure the key
+    :param key_name: Keyfile name
+    """
     private_key = ed25519.Ed25519PrivateKey.generate()
     public_key = private_key.public_key()
 
@@ -52,6 +69,12 @@ def gen_ed25519_key(password: str, key_name: str = 'id_ed25519') -> None:
 
 
 def gen_rsa_key(password: str, key_name: str = 'id_rsa', key_size: int = 3072) -> None:
+    """
+        Generate RSA key
+        :param password: Password to secure the key
+        :param key_name: Keyfile name
+        :param key_size: Size of the keyfile
+        """
     private_key = rsa.generate_private_key(
         public_exponent=65537,
         key_size=key_size,
@@ -73,6 +96,9 @@ def gen_rsa_key(password: str, key_name: str = 'id_rsa', key_size: int = 3072) -
 
 
 def ssh_keys() -> None:
+    """
+    Main function to create SSH keys
+    """
     while True:
         lang = setting.get('app_lang')
         template = js.load(open(f'json_files/template_{(lang.lower())}.json'))
@@ -88,14 +114,31 @@ def ssh_keys() -> None:
                 key_pass = ''
 
                 while key_pass == '':
-                    key_pass = input(f'{template['key_pass']}\n> ')
+                    key_pass = getpass(f'{template['key_pass']}\n> ')
                     if key_pass == '':
                         print(f'{template['empty_pass']}')
                         continue
 
                 if key_name == '':
+                    key_name = 'id_ed25519'
+                    keyfile_exists = find_key(key_name)
+
+                    if keyfile_exists:
+                        print(template['key_exists'])
+                        sleep(5)
+                        clear()
+                        continue
+
                     gen_ed25519_key(key_pass)
                 else:
+                    keyfile_exists = find_key(key_name)
+
+                    if keyfile_exists:
+                        print(template['key_exists'])
+                        sleep(5)
+                        clear()
+                        continue
+
                     gen_ed25519_key(key_pass, key_name)
 
                 if platform == 'win32':
@@ -111,7 +154,7 @@ def ssh_keys() -> None:
                 key_size = 0
 
                 while key_pass == '':
-                    key_pass = input(f'{template['key_pass']}\n> ')
+                    key_pass = getpass(f'{template['key_pass']}\n> ')
                     if key_pass == '':
                         print(f'{template['empty_pass']}')
                         continue
@@ -134,8 +177,25 @@ def ssh_keys() -> None:
                         print(f'{template['weak_key']}')
 
                 if key_name == '':
+                    key_name = 'id_rsa'
+                    keyfile_exists = find_key(key_name)
+
+                    if keyfile_exists:
+                        print(template['key_exists'])
+                        sleep(5)
+                        clear()
+                        continue
+
                     gen_rsa_key(key_pass, key_size=key_size)
                 else:
+                    keyfile_exists = find_key(key_name)
+
+                    if keyfile_exists:
+                        print(template['key_exists'])
+                        sleep(5)
+                        clear()
+                        continue
+
                     gen_rsa_key(key_pass, key_name, key_size)
 
                 if platform == 'win32':

@@ -10,12 +10,20 @@ setting = js.load(open('json_files/settings.json'))
 
 
 def gen_pass(x: int = 20) -> str:
+    """
+    Generate a password of x characters
+    :param x: Length of the password
+    :return: Password
+    """
     chars = string.ascii_letters + string.digits + string.punctuation
     pas = ''.join(secrets.choice(chars) for _ in range(x))
     return pas
 
 
 def password() -> None:
+    """
+    Main function of generating passwords
+    """
     while True:
         lang = setting.get('app_lang')
         template = js.load(open(f'json_files/template_{(lang.lower())}.json'))
