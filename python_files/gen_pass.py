@@ -51,7 +51,7 @@ def password() -> None:
                         pcp.copy(pas)
                         print(f'{template['copy']}')
 
-                    sleep(5)
+                    input(template['continue'])
                     return
                 else:
                     print(template['wrong_pass_len'])
